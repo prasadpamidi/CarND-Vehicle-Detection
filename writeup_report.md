@@ -48,7 +48,7 @@ Here is an example using the `YUV` color space and HOG parameters of `orientatio
 
 ![alt text][image2]
 
-####2. Explain how you settled on your final choice of HOG parameters.
+#### 2. Explain how you settled on your final choice of HOG parameters.
 
 I switched a lot between color spaces YUV and YCrCb. Although, I noticed the test validation accuracy pretty much the same with these two.
 
