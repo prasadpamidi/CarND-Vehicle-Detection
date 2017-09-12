@@ -39,7 +39,7 @@ You're reading it!
 
 The code for this step is contained in the 6th code cell of the IPython notebook in "./Vehicle-Detection.ipynb".  
 
-I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an few images `vehicle`(1-10) and `non-vehicle` (11-20)classes:
+I started by reading in all the `vehicle` and `non-vehicle` images.  Here are few images for `vehicle`(1-10) and `non-vehicle` (11-20)classes:
 
 ![alt text][image1]
 
@@ -51,54 +51,56 @@ Here is an example using the `YUV` color space and HOG parameters of `orientatio
 
 ####2. Explain how you settled on your final choice of HOG parameters.
 
-I played a lot with color spaces, predominantly with YUV and YCrCb. I noticed the test validation accuracy pretty much the same with these two color spaces.
+I switched a lot between color spaces YUV and YCrCb. Although, I noticed the test validation accuracy pretty much the same with these two.
 
-For the orientations, pixels per cell and cell per blocks params, I used the default values mentioned in the course. I didn't much difference when i changed those params.  
+For the orientations, pixels per cell and cell per blocks params, I used the default values mentioned in the course. I didn't notice much difference when i changed these params.
+
 I also used the spatial binning and histogram color features and combined hog features together.
 
 I finally made use of `StandardScaler` class to normalize the features.
 
-The code for these steps are contained in code cells 4, 5 and 7 in the IPython notebook "./Vehicle-Detection.ipynb".
+The code for these steps are contained in code cells 4, 5 and 7 in the IPython notebook.
 
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
 I trained a LinearSVM classifier using the normalized image features.
 
-During the training, I split the data train and test sets with the test set size equal to 2% of the total sample size.
+During the training, I split the data into train and test sets with the test set size equal to 2% of the total dataset size.
 
-I used the Linear SVM model to fit the train data set and then validated accuracy against the test dataset.
+I used the Linear SVM model to fit the train data set and then validated the accuracy against the test dataset.
 
 The accuracy was above 98%.
 
-The code for this step is contained in the 8th code cell of the IPython notebook in "./Vehicle-Detection.ipynb".  
+The code for this step is contained in the 8th code cell.  
 
 ### Sliding Window Search
 
 #### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
-I decided two split the sliding window search into 3 scales.
+I decided to split the sliding window search into 3 scales.
 
-First, i applied sliding window with a scale value of 1.5 between vertical pixel postions 400-500. I came up with this value after a lot trial and errors. This scale is meant to detect cars at farther distance.
+First, i applied sliding window with a scale value of 1.5 between vertical pixel postions 400-500. I came up with this value mostly after few trials. This scale is meant to detect cars at farther distance.
 
 ![alt text][image3]
 
-Second, I applied sliding window with a scale of 2.0 between y posotions 400 - 540. This sliding window is meant to detect near by cars.
+Second, I applied sliding window with a scale of 2.0 between y positions 400 - 540. This sliding window is meant to detect near by cars(few meters).
 
 ![alt text][image4]
 
-Last, I applied sliding window with a scale of 3.0 to detect cars that very close.
+Lastly, I applied sliding window with a scale of 3.0 to detect cars that very close(few feet).
 
 ![alt text][image5]
 
-####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
+#### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
-Ultimately I searched on three scales using YUV HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
+Ultimately I searched on three scales using YUV color spaced HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
 ![alt text][image6]
 
-I primarily spent most of the time in figuring proper vertical positions to accurately detect cars at different scales and positions.
+I primarily spent most of the time in figuring out proper vertical positions and scale values to accurately detect cars at different scales and positions.
 
-Rest of code mostly came from class lecture snippets.
+Rest of code mostly came from class lecture note snippets.
+
 ---
 
 ### Video Implementation
@@ -107,7 +109,7 @@ Rest of code mostly came from class lecture snippets.
 Here's a [link to my video result](./project_video_output.mp4)
 
 
-####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
+#### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
 I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
 
@@ -123,11 +125,11 @@ Here is the output after applying threshold.
 
 ![alt text][image8]
 
-### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
+Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
 
 ![alt text][image9]
 
-### Here the resulting bounding boxes are drawn onto the last frame in the series:
+Here the resulting bounding boxes are drawn onto the last frame in the series:
 
 ![alt text][image10]
 
@@ -137,9 +139,9 @@ Here is the output after applying threshold.
 
 ---
 
-###Discussion
+### Discussion
 
-####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
 I felt the multi scale sliding approach could've been more robust as I noticed few disturbances in the project video output.
 
